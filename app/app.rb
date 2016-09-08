@@ -2,6 +2,7 @@ ENV["RACK_ENV"] ||= "development"
 require 'sinatra/base'
 require 'sinatra/flash'
 require_relative 'data_mapper_setup'
+require 'bcrypt'
 
 class BookmarkManager < Sinatra::Base
   enable :sessions
@@ -43,12 +44,28 @@ class BookmarkManager < Sinatra::Base
 
   post '/users' do
       @user = User.new(email: params[:email], password: params[:password], password_confirmation: params[:password_confirmation])
-    if @user.save
+    if @user.save #user can only be saved if it passes the checks in the user model
       session[:user_id] = @user.id
       redirect '/links'
     else
-      flash[:password_mismatch] = 'Password and confirmation password do not match'
-      redirect '/sign_up'
+      flash.now[:errors] = @user.errors.full_messages
+      # flash[:password_mismatch] = 'Password and confirmation password do not match'
+      erb :'users/sign_up'
+    end
+  end
+
+  get '/sessions/new' do
+    erb :'sessions/new'
+  end
+
+  post '/sessions' do
+    user = User.authenticate(params[:email], params[:password])
+    if user
+      session[:user_id] = user.id
+      redirect '/links'
+    else
+      flash.now[:errors] = ['The email or password is incorrect']
+      erb :'sessions/new'
     end
   end
 
