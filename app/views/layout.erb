@@ -8,7 +8,7 @@
     <% if current_user %>
       Welcome, <%= current_user.email %>
       <% else %>
-      Your password and confirmation password do not match
+      <%= flash[:password_mismatch] %>
     <% end %>
     <%= yield %>
   </body>
