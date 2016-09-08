@@ -12,6 +12,17 @@ feature 'Sign up' do
     expect(current_path).to eq '/sign_up'
     expect(page).to have_content 'Password and confirmation password do not match'
 
-    expect(page.find_field('email').value).to eq 'littlethao@me.com'
+  #  expect(page.find_field('email').value).to eq 'littlethao@me.com'
+  end
+
+  scenario 'user signs up with a blank email' do
+    visit '/sign_up'
+    fill_in :email, with: ""
+    fill_in :password, with: 'asdf'
+    fill_in :password_confirmation, with: 'asdf'
+    click_button 'Sign up'
+    expect(current_path).to eq '/sign_up'
+    expect(page).to have_content("Password confirmation:")
+    expect(User.all).to be_empty
   end
 end

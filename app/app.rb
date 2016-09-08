@@ -37,7 +37,7 @@ class BookmarkManager < Sinatra::Base
   end
 
   get '/sign_up' do
-    @user ||= User.new
+    @user = User.new
     erb :'users/sign_up'
   end
 
