@@ -42,7 +42,6 @@ class BookmarkManager < Sinatra::Base
   end
 
   post '/users' do
-    # if params[:password] == params[:password_confirmation]
       @user = User.new(email: params[:email], password: params[:password], password_confirmation: params[:password_confirmation])
     if @user.save
       session[:user_id] = @user.id

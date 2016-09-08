@@ -11,8 +11,6 @@ feature 'Sign up' do
     expect{ sign_up(password_confirmation: 'wrong')}.not_to change(User, :count)
     expect(current_path).to eq '/sign_up'
     expect(page).to have_content 'Password and confirmation password do not match'
-
-  #  expect(page.find_field('email').value).to eq 'littlethao@me.com'
   end
 
   scenario 'user signs up with a blank email' do
@@ -25,4 +23,15 @@ feature 'Sign up' do
     expect(page).to have_content("Password confirmation:")
     expect(User.all).to be_empty
   end
+
+  scenario 'user received error message when signing up with already registered email address' do
+    visit '/sign_up'
+    sign_up
+    visit '/sign_up'
+    sign_up
+    expect(current_path).to eq '/sign_up'
+    expect(page).to have_content('User already exists')
+  end
+
+
 end

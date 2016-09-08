@@ -10,13 +10,14 @@ class User
 
   # these property declarations set the column headers in the 'links' table
   property :id,     Serial # Serial means that it will be auto-incremented for every record
-  property :email,    String, required: true, format: :email_address
+  property :email,    String, required: true, format: :email_address, unique: true
   property :password_digest, Text
   attr_reader :password, :email
   attr_accessor :password_confirmation
 
-
   validates_confirmation_of :password
+  validates_format_of :email, as: :email_address
+  # validates_uniqueness_of :email, :scope => :id
 
   # when assigned the password, we don't store it directly
     # instead, we generate a password digest, that looks like this:
