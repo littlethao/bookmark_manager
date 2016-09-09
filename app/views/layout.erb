@@ -15,7 +15,11 @@
             <% flash.now[:errors].each do |message| %>
             <li><%= message %></li>
           </ul>
+          <% end %>
       <% end %>
+
+      <% if flash.keep[:notice] %>
+      <%= flash[:notice] %>
     <% end %>
 
   </body>
