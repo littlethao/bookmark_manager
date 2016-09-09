@@ -8,6 +8,7 @@ require './app/models/link'
 require './app/models/user'
 require './app/app'
 require_relative 'feature/web_helper'
+require 'feature/helpers'
 
 require 'capybara'
 require 'capybara/rspec'
@@ -37,6 +38,8 @@ RSpec.configure do |config|
   # rspec-expectations config goes here. You can use an alternate
   # assertion/expectation library such as wrong or the stdlib/minitest
   # assertions if you prefer.
+  config.include Helpers
+
   config.before(:suite) do
     DatabaseCleaner.strategy = :transaction
     DatabaseCleaner.clean_with(:truncation)

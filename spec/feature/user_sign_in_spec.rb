@@ -10,10 +10,7 @@ feature 'A user can sign in' do
   end
 
   scenario 'An existing user signs in' do
-    visit '/sessions/new'
-    fill_in('email', :with => user.email)
-    fill_in('password', :with => user.password)
-    click_button('login')
+    sign_in
     expect(current_path).to eq '/links'
     expect(page).to have_content("Welcome, #{user.email}")
   end

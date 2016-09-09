@@ -8,11 +8,7 @@ feature 'Sign out user' do
   end
 
   scenario 'current user signing out session' do
-    visit '/sessions/new'
-    fill_in('email', :with => user.email)
-    fill_in('password', :with => user.password)
-    click_button('login')
-
+    sign_in
     visit '/session/end'
     click_button('logout')
     expect(current_path).to eq '/links'
