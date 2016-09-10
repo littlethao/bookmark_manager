@@ -7,7 +7,6 @@ ENV['RACK_ENV'] = "test"
 require './app/models/link'
 require './app/models/user'
 require './app/app'
-require_relative 'feature/web_helper'
 require 'feature/helpers'
 
 require 'capybara'
